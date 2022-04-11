@@ -67,7 +67,17 @@
   gap: 100px;
 }
 
-.form {
-  display: block;
+.menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  background-color: gray;
+}
+
+.menu a {
+  color: #fff;
+  text-decoration: none;
 }
 /*# sourceMappingURL=App.css.map */
