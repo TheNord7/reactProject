@@ -6,7 +6,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Message from '../components/Message';
 import Authors from '../Authors';
-import { useParams } from 'react-router-dom';
 
 const SendField = () => {
 

@@ -5,6 +5,8 @@ import App from './App';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
 import { Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store'
 
 
 const theme = createTheme({
@@ -18,9 +20,11 @@ const theme = createTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Provider>
 
   </React.StrictMode>,
   document.getElementById('root')
