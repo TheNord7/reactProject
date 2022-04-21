@@ -4,15 +4,19 @@ import { Send } from '@mui/icons-material';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import Message from '../components/Message';
+import { addMessage } from '../store/messages/actions';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Authors from '../Authors';
 
 const SendField = () => {
-
-    const [messageList, setmessageList] = useState([]);
+    let { chatId } = useParams();
     const [value, setValue] = useState('');
     const inputRef = useRef(null);
-
+    const dispatch = useDispatch();
+    const author = useSelector(state => state.profile.name);
+    const allMessages = useSelector(state => state.messages.messageList);
+    const messages = allMessages[chatId] || [];
 
 
     const changeText = (event) => {
@@ -21,7 +25,8 @@ const SendField = () => {
 
     const addText = (event) => {
         event.preventDefault();
-        setmessageList([...messageList, { text: value, author: Authors.user }])
+        const newMessage = { text: value, author };
+        dispatch(addMessage(chatId, newMessage));
         setValue('')
         inputRef.current?.focus();
     }
@@ -32,13 +37,14 @@ const SendField = () => {
     }, [])
 
     useEffect(() => {
-        if (messageList.length > 0 && messageList[messageList.length - 1].author !== Authors.bot) {
-            const name = Authors.user;
+        if (messages.length > 0 && messages[messages.length - 1].author !== Authors.bot) {
+
+            const newMessage = { text: `Привет, ${author}`, author: Authors.bot };
             setTimeout(() => {
-                setmessageList([...messageList, { text: `Привет, ${name}`, author: Authors.bot }])
+                dispatch(addMessage(chatId, newMessage))
             }, 1500)
         }
-    }, [messageList])
+    }, [messages, chatId])
 
     const sendForm = (event) => {
         event.preventDefault()
@@ -48,10 +54,6 @@ const SendField = () => {
         <div className='chatWrap'>
 
             <form onSubmit={sendForm}>
-
-                <span>Чат:</span><br /><br />
-
-                <Message message={messageList} />
 
                 <Input
                     style={{ marginRight: '10px' }}

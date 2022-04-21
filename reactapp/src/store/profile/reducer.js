@@ -1,9 +1,9 @@
 
-import { TOGGLE_NAME } from './actions';
+import { SET_NAME, TOGGLE_NAME } from './actions';
 
 const initialState = {
-    showName: false,
-    // name: 'Jora'
+    showName: true,
+    name: 'Jora'
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -13,6 +13,13 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 showName: !state.showName
             };
+
+        case SET_NAME:
+            return {
+                ...state,
+                name: action.payload
+            };
+
         default:
             return state;
     }

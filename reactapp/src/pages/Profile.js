@@ -1,33 +1,40 @@
 import { useState } from "react";
-import { useCallback } from "react";
-import { changeVisible } from "../store/profile/actions";
 import { useDispatch, useSelector } from "react-redux";
+import Input from '@mui/material/Input';
+import { Button } from '@mui/material';
+import { setName } from "../store/profile/actions";
 
 
 const Profile = () => {
 
-    const { showName, name } = useSelector((state) => state)
+    const { name } = useSelector((state) => state.profile)
     const dispatch = useDispatch();
 
-    const setShowName = useCallback(() => {
-        dispatch(changeVisible);
-    }, [dispatch]);
+    const [value, setValue] = useState(name);
 
-    const [value, setValue] = useState('');
-    const newObj = ([...value, { value }]);
-
-    const testForm = (event) => {
+    const changeText = (event) => {
         setValue(event.target.value)
     }
 
+    const changeName = () => {
+        dispatch(setName(value));
+    };
 
 
-    return <div>Profile
-        <h1>{showName && <p>{value}</p>}</h1>
-        <input value={value} onChange={testForm}></input>
-        <button onClick={setShowName}>Click</button>
-        /
-    </div>
+
+
+    return <div>
+        <h3>Profile</h3>
+        Имя: {name}<br />
+        <Input
+            style={{ marginRight: '10px' }}
+            value={value} onChange={changeText}
+            id="input-with-icon-adornment"
+        />
+        <Button style={{ color: 'white' }} type='submit' variant="contained" disableElevation onClick={changeName}>
+            Save
+        </Button>
+    </div >
 
 };
 
