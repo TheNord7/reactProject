@@ -4,10 +4,9 @@ import { Send } from '@mui/icons-material';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { addMessage } from '../store/messages/actions';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import Authors from '../Authors';
+import { addMessageWithThunk, onAddMessageWithSaga } from '../store/messages/actions';
 
 const SendField = () => {
     let { chatId } = useParams();
@@ -15,9 +14,6 @@ const SendField = () => {
     const inputRef = useRef(null);
     const dispatch = useDispatch();
     const author = useSelector(state => state.profile.name);
-    const allMessages = useSelector(state => state.messages.messageList);
-    const messages = allMessages[chatId] || [];
-
 
     const changeText = (event) => {
         setValue(event.target.value)
@@ -26,7 +22,7 @@ const SendField = () => {
     const addText = (event) => {
         event.preventDefault();
         const newMessage = { text: value, author };
-        dispatch(addMessage(chatId, newMessage));
+        dispatch(addMessageWithThunk(chatId, newMessage));
         setValue('')
         inputRef.current?.focus();
     }
@@ -36,24 +32,10 @@ const SendField = () => {
 
     }, [])
 
-    useEffect(() => {
-        if (messages.length > 0 && messages[messages.length - 1].author !== Authors.bot) {
-
-            const newMessage = { text: `Привет, ${author}`, author: Authors.bot };
-            setTimeout(() => {
-                dispatch(addMessage(chatId, newMessage))
-            }, 1500)
-        }
-    }, [messages, chatId])
-
-    const sendForm = (event) => {
-        event.preventDefault()
-    }
-
     return (
         <div className='chatWrap'>
 
-            <form onSubmit={sendForm}>
+            <form>
 
                 <Input
                     style={{ marginRight: '10px' }}

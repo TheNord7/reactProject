@@ -4,23 +4,18 @@ const initialState = {
     chatList: []
 };
 
-// const chatList = [
-//     {
-//         id: 'string',
-//         name: 'string'
-//     }
-// ]
 
 const chatsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_CHAT:
+            const allMessages = state.chatList;
             return {
-                ...state,
+                ...allMessages,
                 chatList: [
-                    ...state,
+                    ...allMessages,
                     {
                         id: `id${state.chatList.length}`,
-                        name: action.payload.name
+                        name: action.payload
                     }
                 ]
             };

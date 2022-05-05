@@ -39,8 +39,6 @@ const ChatList = () => {
         handleClose();
     };
 
-    console.log(chats);
-
 
     return (
         <div>
