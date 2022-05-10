@@ -8,6 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import mySaga from './sagas';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import gistsReducer from './gists/reducer';
 
 // const sagaMiddleware = createSagaMiddleware();
 
@@ -23,8 +24,8 @@ const persistConfig = {
 const reducers = combineReducers({
     profile: profileReducer,
     messages: messagesReducer,
-    chats: chatsReducer
-
+    chats: chatsReducer,
+    gists: gistsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
