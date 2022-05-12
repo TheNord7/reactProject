@@ -3,24 +3,9 @@ import Chats from "./Chats";
 import Profile from "./Profile";
 import Home from "./Home";
 import '../App.scss'
-import { useState } from "react";
-import Authors from "../Authors";
-
-const chatsArr = {
-    id1: {
-        name: 'First chat',
-        message: [{ text: 'Some text first', author: Authors.user }]
-    },
-
-    id2: {
-        name: 'Second chat',
-        message: [{ text: 'Some text second', author: Authors.bot }]
-    }
-};
+import Gists from "./Gists";
 
 const Router = () => {
-
-    const [chats, setChats] = useState(chatsArr);
 
     return (
         <BrowserRouter>
@@ -34,12 +19,16 @@ const Router = () => {
                 <li>
                     <Link to={"/chats"}>Chats</Link>
                 </li>
+                <li>
+                    <Link to={"/gists"}>Gists</Link>
+                </li>
             </ul>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/chats/:chatId" element={<Chats chats={chats} />} />
-                <Route path="*" element={<Chats chats={chats} />} />
+                <Route path="/gists" element={<Gists />} />
+                <Route path="/chats/:chatId" element={<Chats />} />
+                <Route path="*" element={<Chats />} />
             </Routes>
         </BrowserRouter>
     )

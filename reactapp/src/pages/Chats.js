@@ -7,14 +7,16 @@ import SendField from '../components/SendField';
 
 
 
-const Chats = ({ chats }) => {
+const Chats = () => {
 
 
 
     return <div className='wrap'>
-        <ChatList chats={chats} />
-        <SendField />
-        <MessageList chats={chats} />
+        <ChatList />
+        <div>
+            <MessageList />
+            <SendField />
+        </div>
 
     </div>
 };
