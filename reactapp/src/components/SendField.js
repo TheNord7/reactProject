@@ -7,6 +7,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMessageWithThunk, onAddMessageWithSaga } from '../store/messages/actions';
+import { addMessageWithFB } from '../middlewares/middleware';
 
 const SendField = () => {
     let { chatId } = useParams();
@@ -22,7 +23,7 @@ const SendField = () => {
     const addText = (event) => {
         event.preventDefault();
         const newMessage = { text: value, author };
-        dispatch(addMessageWithThunk(chatId, newMessage));
+        dispatch(addMessageWithFB(chatId, newMessage));
         setValue('')
         inputRef.current?.focus();
     }

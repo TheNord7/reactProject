@@ -1,7 +1,8 @@
 
 import './App.scss';
 import Router from './pages/Router';
-
+import 'react-toastify/dist/ReactToastify.css'
+import { AuthProvider } from './hooks/AuthProvider';
 
 
 function App() {
@@ -9,7 +10,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Router />
+        <AuthProvider>
+          <Router />
+        </AuthProvider>
       </header>
     </div >
   );
