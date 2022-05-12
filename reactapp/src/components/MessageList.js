@@ -7,7 +7,9 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { AccountCircle, Android } from '@mui/icons-material';
 import Authors from '../Authors';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMessagesByChatIdWithFB } from "../middlewares/middleware";
+import { useEffect } from "react";
 
 
 
@@ -16,14 +18,19 @@ const MessageList = () => {
     const allMessages = useSelector(state => state.messages.messageList)
     let { chatId } = useParams();
     const { name } = useSelector((state) => state.profile);
-    if (!allMessages[chatId]) return null;
     const messages = allMessages[chatId];
+    const dispatch = useDispatch();
 
     const checkAuthor = (author) => {
         return author === Authors.bot;
     }
+
+    useEffect(() => {
+        dispatch(getMessagesByChatIdWithFB(chatId));
+    }, [chatId])
+
     return <>
-        {messages.map((el) =>
+        {messages?.map((el) =>
         (
             <List sx={{ width: '100%', maxWidth: 360, border: '3px solid white', borderRadius: '40px', marginBottom: '10px' }} key={el.id}>
                 <ListItem>
