@@ -1,6 +1,7 @@
 import Authors from "../../Authors";
 export const ADD_MESSSAGE = 'MESSAGE::ADD_MESSAGE';
 export const ADD_MESSAGE_WITH_SAGA = 'MESSAGE::ADD_MESSAGE_WITH_SAGA';
+export const UPDATE_MESSAGES = 'MESSAGE::UPDATE_MESSAGES';
 
 export const addMessage = (chatId, message) => ({
     type: ADD_MESSSAGE,
@@ -21,3 +22,9 @@ export const addMessageWithThunk = (chatId, message) => (dispatch, getState) => 
     }
 
 };
+
+export const updateMessages = (chatId, messages) => ({
+    type: UPDATE_MESSAGES,
+    chatId,
+    messages
+});

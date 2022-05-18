@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
@@ -8,8 +8,11 @@ import Avatar from '@mui/material/Avatar';
 import ListItemButton from "@mui/material/ListItemButton";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Dialog, DialogTitle, TextField } from "@mui/material";
+import { Button, Dialog, DialogTitle, IconButton, TextField } from "@mui/material";
 import { addChat } from "../store/chats/actions";
+import { useParams } from "react-router-dom";
+import { addChatWithFB, deleteChatWithFB, initTrackerWithFB } from "../middlewares/middleware";
+
 
 
 
@@ -18,6 +21,7 @@ const ChatList = () => {
     const chats = useSelector(state => state.chats.chatList);
     const [visible, setvisible] = useState(false);
     const dispatch = useDispatch();
+    const { chatId } = useParams();
 
     const handleChatName = (event) => {
         setChatName(event.target.value);
@@ -35,9 +39,17 @@ const ChatList = () => {
     };
 
     const handleSave = () => {
-        dispatch(addChat(chatName));
+        dispatch(addChatWithFB(chatName));
         handleClose();
     };
+
+    const deleteChat = (id) => {
+        dispatch(deleteChatWithFB(id));
+    };
+
+    useEffect(() => {
+        dispatch(initTrackerWithFB());
+    }, [chatId])
 
 
     return (
@@ -57,6 +69,7 @@ const ChatList = () => {
                                     <ListItemText primary={chat.name} />
                                 </ListItemButton>
                             </ListItem>
+                            <Button onClick={() => deleteChat(chat.id)}>X</Button>
                             <Divider variant="inset" component="li" />
                         </List>
                     </Link>
